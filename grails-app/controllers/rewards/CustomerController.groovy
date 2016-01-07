@@ -17,6 +17,27 @@ class CustomerController {
         [customerInstanceList: customerInstance]
     }
 
+    def customerLookup(Customer lookupInstance) {
+
+        // Query customer by phone #
+        // If no result,
+        // Create a new customer
+        // Create welcome message
+        // Add award record
+        // Save customer
+        // Send Welcome to kiosk
+        // If customer found,
+        // Calculate total points
+        // Create welcome message
+        // Add award record
+        // Save customer
+        // Send Welcome to kiosk
+
+        def (customerInstance, welcomeMessage) = calculationsService.processCheckin(lookupInstance)
+        render(view: "checkin", model: [customerInstance: customerInstance, welcomeMessage: welcomeMessage])
+
+    }
+
     def checkin() {
 
     }
@@ -57,5 +78,15 @@ class CustomerController {
         def customerInstance = Customer.get(id)
         customerInstance.delete()
         redirect(action: "index")
+    }
+
+    def profile() {
+        def customerInstance = Customer.findByPhone(params.id)
+        [customerInstance: customerInstance]
+    }
+
+    def updateProfile(Customer customerInstance) {
+        customerInstance.save()
+        render(view: "profile", model: [customerInstance: customerInstance])
     }
 }
